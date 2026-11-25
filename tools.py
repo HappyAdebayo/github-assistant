@@ -165,8 +165,95 @@ GET_ISSUE_DETAILS_TOOL = types.FunctionDeclaration(
     }
 )
 
+ASK_REPOSITORY_TOOL = types.FunctionDeclaration(
+    name="ask_repository",
+    description=(
+        "Search a GitHub repository's source code and documentation "
+        "to retrieve relevant context for answering questions about "
+        "its implementation. Use this tool when the user asks how "
+        "something works, where something is implemented, or asks "
+        "questions that may require examining multiple files."
+    ),
+    parameters={
+        "type": "OBJECT",
+        "properties": {
+            "owner": {
+                "type": "STRING",
+                "description": "GitHub repository owner"
+            },
+            "repo": {
+                "type": "STRING",
+                "description": "GitHub repository name"
+            },
+            "question": {
+                "type": "STRING",
+                "description": "Question about the repository's code or documentation"
+            }
+        },
+        "required": ["owner", "repo", "question"]
+    }
+)
+
+
+GET_REPOSITORY_FILE_TOOL = types.FunctionDeclaration(
+    name="get_repository_file",
+    description=(
+        "Retrieve the complete contents of a specific file "
+        "from a GitHub repository. Use this when you need to "
+        "inspect the actual implementation of a file rather "
+        "than relying on retrieved code snippets."
+    ),
+    parameters={
+        "type": "OBJECT",
+        "properties": {
+            "owner": {
+                "type": "STRING",
+                "description": "GitHub repository owner"
+            },
+            "repo": {
+                "type": "STRING",
+                "description": "GitHub repository name"
+            },
+            "file_path": {
+                "type": "STRING",
+                "description": "Path to the file inside the repository"
+            }
+        },
+        "required": ["owner", "repo", "file_path"]
+    }
+)
+
+
+SEARCH_REPOSITORY_CODE_TOOL = types.FunctionDeclaration(
+    name="search_repository_code",
+    description=(
+        "Search across a GitHub repository's source files for "
+        "specific keywords, function names, classes, or code patterns. "
+        "Returns matching file paths, line numbers, and code lines."
+    ),
+    parameters={
+        "type": "OBJECT",
+        "properties": {
+            "owner": {
+                "type": "STRING",
+                "description": "GitHub repository owner"
+            },
+            "repo": {
+                "type": "STRING",
+                "description": "GitHub repository name"
+            },
+            "search_term": {
+                "type": "STRING",
+                "description": "Keyword or code pattern to search for"
+            }
+        },
+        "required": ["owner", "repo", "search_term"]
+    }
+)
+
+
 GITHUB_TOOLS = [
     types.Tool(
-        function_declarations=[GET_REPOSITORIES_TOOL, GET_REPOSITORY_TOOL, LIST_ISSUES_TOOL, CREATE_ISSUE_TOOL,GET_ISSUE_DETAILS_TOOL]
+        function_declarations=[GET_REPOSITORIES_TOOL, GET_REPOSITORY_TOOL, LIST_ISSUES_TOOL, CREATE_ISSUE_TOOL,GET_ISSUE_DETAILS_TOOL, ASK_REPOSITORY_TOOL, GET_REPOSITORY_FILE_TOOL, SEARCH_REPOSITORY_CODE_TOOL]
     )
 ]

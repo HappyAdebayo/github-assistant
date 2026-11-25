@@ -1,5 +1,7 @@
 from github_manager import get_repositories, get_repository, list_issues, create_issue, get_issue_details
-from schema import RepositoryQuery, RepositoryDetailsQuery, ListIssuesQuery, CreateIssueQuery, GetIssueDetailsQuery
+from schema import RepositoryQuery, RepositoryDetailsQuery, ListIssuesQuery, CreateIssueQuery, GetIssueDetailsQuery, RepositoryQuestionQuery,RepositoryFileQuery, RepositoryCodeSearchQuery
+from rag.repository_qa import ask_repository
+from rag.repository_ingestion import get_repository_file,search_repository_code
 
 def execute_tool(function_call):
     tool_name = function_call.name
@@ -11,6 +13,9 @@ def execute_tool(function_call):
         "list_issues": lambda: list_issues(**ListIssuesQuery(**arguments).model_dump()),
         "create_issue": lambda: create_issue(**CreateIssueQuery(**arguments).model_dump()),
         "get_issue_details": lambda: get_issue_details(**GetIssueDetailsQuery(**arguments).model_dump()),
+        "ask_repository": lambda: ask_repository(**RepositoryQuestionQuery(**arguments).model_dump()),
+        "get_repository_file": lambda: get_repository_file(**RepositoryFileQuery(**arguments).model_dump()),
+        "search_repository_code": lambda: search_repository_code(**RepositoryCodeSearchQuery(**arguments).model_dump()),
     }
 
     handler = tool_handlers.get(tool_name)

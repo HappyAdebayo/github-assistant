@@ -51,7 +51,7 @@ def github_request(method, endpoint, **kwargs):
                 return "GitHub authentication failed. Check your access token."
 
             elif status_code == 403:
-                return "GitHub access forbidden. Check your token permissions or rate limit."
+                return f"GitHub access forbidden. Check your token permissions or rate limit. {e}"
 
             elif status_code == 404:
                 return "GitHub resource not found."

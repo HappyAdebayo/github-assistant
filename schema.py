@@ -26,3 +26,27 @@ class GetIssueDetailsQuery(BaseModel):
     owner: str
     repo: str
     issue_number: int = Field(ge=1)
+
+class RepositoryQuestionQuery(BaseModel):
+    owner: str
+    repo: str
+    question: str = Field(
+        min_length=1,
+        description="Question about the repository's code or documentation"
+    )
+
+class RepositoryFileQuery(BaseModel):
+    owner: str
+    repo: str
+    file_path: str = Field(
+        min_length=1,
+        description="Path to the file inside the repository"
+    )
+
+class RepositoryCodeSearchQuery(BaseModel):
+    owner: str
+    repo: str
+    search_term: str = Field(
+        min_length=1,
+        description="Keyword or code pattern to search for"
+    )
